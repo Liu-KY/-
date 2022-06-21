@@ -51,6 +51,7 @@ let crumbs = document.querySelector(
 );
 //点击左边的ul
 leftul.addEventListener("click", (e) => {
+  console.log(e.target);
   if (e.target.nodeName == "A") {
     samsunglink(leftLis, "active", true);
     e.target.classList.add("active");
@@ -91,11 +92,13 @@ Ajax({
     dateTrtd(res.splice(0, 10), arr, str);
     //渲染进度条
     progressBarWidth();
+    // 渲染右上页码
+    rightpageNumber();
   },
 });
 
-// 渲染右上页码
-rightpageNumber();
+
+
 
 // 获取分页的ul
 let padingUl = document.querySelector(
@@ -247,5 +250,7 @@ rpageNumber.onchange = function () {
   sessionStorage.setItem("atPagination", index);
   dateTrtd(res.splice(--index * 10, 10));
   progressBarWidth();
-  console.log(index);
 };
+
+
+
