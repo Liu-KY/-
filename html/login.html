@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="../bootstrap-css/bootstrap.min.css">
+    <!-- <script src="../bootstrap-js/bootstrap.min.js"></script> -->
+    <script src="../js/cookie.js"></script>
+    <script src="../js/ajax.js"></script>
+
+    <style>
+        body {
+            background: url(https://img1.baidu.com/it/u=2553895318,2686370113&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500) no-repeat;
+            background-repeat: no-repeat;
+            background-size: 100% auto;
+        }
+
+        .main {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            margin-left: -250px;
+            margin-top: -200px;
+            width: 500px;
+            height: 400px;
+            padding-top: 90px;
+        }
+
+        .main form p {
+            height: 38px;
+            line-height: 38px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="main">
+        <form>
+            <div class="row">
+                <div class="col-3"></div>
+                <div class="col-6">
+                    <input type="text" class="form-control" placeholder="请输入账号" name="username"
+                        style="margin-bottom: 20px;">
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="row">
+                <div class="col-3"></div>
+                <div class="col-6">
+                    <input type="password" class="form-control" placeholder="请输入密码" name="password"
+                        style="margin-bottom: 10px;">
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="row">
+                <div class="col-3"></div>
+                <div class="col-4">
+                    <input type="text" class="form-control" placeholder="请输入验证码" name="auth-code"
+                        style="margin-bottom: 10px;">
+                </div>
+                <div class="col-2" style="padding-left: 0;text-align: center;"><span style="height: 38px;line-height: 38px; display: block;" id="captchaSpan" onclick="check()">6+8=</span></div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="row" style="margin-bottom: 10px;">
+                <div class="col-3"></div>
+                <div class="col-6">
+                    <label><input class="form-check-input" type="checkbox" name="remember"> 记住密码</label>
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-3"></div>
+                <div class="col-6">
+                    <input type="submit" class="btn btn-primary btn-lg" style="width: 100%;" value="登录">
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+        </form>
+
+
+    </div>
+    <script src="../js/login.js"></script>
+
+</body>
+
+</html>
