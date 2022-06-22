@@ -38,7 +38,7 @@ myUl.addEventListener("click", (e) => {
 });
 
 // 右边ul
-let leftul = document.querySelector(
+let leftUl = document.querySelector(
   "body > main > div.d-flex.flex-column.flex-shrink-0.p-3.text-white.bg-dark > ul"
 );
 // 右边ul的全部儿子
@@ -49,20 +49,84 @@ let leftLis = document.querySelectorAll(
 let crumbs = document.querySelector(
   "body > main > div.b-example-divider > header > div > div.dropdown > ul > li > a"
 );
-//点击左边的ul
-leftul.addEventListener("click", (e) => {
-  console.log(e.target);
-  if (e.target.nodeName == "A") {
-    samsunglink(leftLis, "active", true);
-    e.target.classList.add("active");
-    crumbs.innerHTML = e.target.innerHTML;
-  }
-});
 
 //tbody
 let tbody = document.querySelector(
   "body > main > div.b-example-divider > div:nth-child(3) > div.col-10 > table > tbody"
 );
+//thead下面的tr
+let theadTr = document.querySelector("body > main > div.b-example-divider > div:nth-child(3) > div.col-10 > table > thead > tr")
+console.log(theadTr);
+
+//点击左边的ul
+leftUl.addEventListener("click", (e) => {
+  if (e.target.nodeName == "A") {
+    samsunglink(leftLis, "active", true);
+    e.target.classList.add("active");
+    crumbs.innerHTML = e.target.innerHTML;
+    if(e.target.dataset.message == "YGxx"){
+      console.log("员工信息");
+    }
+
+
+    if(e.target.dataset.message == "YGgz"){
+      theadTr.innerHTML=`<th scope="col">姓名</th>
+      <th scope="col">工资</th>
+      <th scope="col">职位</th>
+      <th scope="col">编辑</th>`
+
+      let sql = "select * from role"
+      
+      Ajax({
+        url: "http://127.0.0.1/php/query.php",
+        data:{sql},
+        success(res) {
+          //设置sessionStorage 储存数据
+          setSession(res);
+          res = JSON.parse(res);
+          let arr = [
+            "R_name",
+            "R_salary",
+            "R_position",
+          ];
+          let str = `
+          <td>
+              <button type="button" class="btn btn-warning btn-sm">修改</button>
+              <button type="button" class="btn btn-danger btn-sm">删除</button>
+              </button>
+          </td>`;
+          // 将需要的内容模板储存到Storage
+          sessionStorage.setItem("arr", arr);
+          // 将默认按钮模板储存到Storage
+          sessionStorage.setItem("str", str);
+          dateTrtd(res.splice(0, 10), arr, str);
+          //渲染进度条
+          progressBarWidth();
+          // 渲染右上页码
+          rightpageNumber();
+        },
+      })
+    }
+
+    if(e.target.dataset.message == "YGzw"){
+      console.log("员工职位");
+    }
+    if(e.target.dataset.message == "Cd"){
+      console.log("菜单");
+    }
+    if(e.target.dataset.message == "CPzl"){
+      console.log("菜品种类");
+    }
+    if(e.target.dataset.message == "Fd"){
+      console.log("分店");
+    }
+    if(e.target.dataset.message == "DYye"){
+      console.log("店营业额");
+    }
+  }
+});
+
+
 
 // 打开页面加载默认的员工信息数据
 Ajax({
@@ -189,19 +253,6 @@ function dateTrtd(data) {
     tr.innerHTML += str;
     tbody.appendChild(tr);
   }
-
-  // for (let k in data) {
-  //   let tr = document.createElement("tr");
-  //   for (let key in data[k]) {
-  //     if (arr.indexOf(key) != -1) {
-  //       let td = document.createElement("td");
-  //       td.innerHTML = data[k][key];
-  //       tr.appendChild(td);
-  //     }
-  //   }
-  //   tr.innerHTML += str;
-  //   tbody.appendChild(tr);
-  // }
 }
 
 //渲染右上页码
