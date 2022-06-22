@@ -6,8 +6,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../bootstrap-css/bootstrap.min.css">
-    <!-- <script src="../bootstrap-js/bootstrap.min.js"></script>
-    <script src="../bootstrap-js/bootstrap.bundle.min.js"></script> -->
+    <!-- <script src="../bootstrap-js/bootstrap.min.js"></script> -->
+    <script src="../bootstrap-js/bootstrap.bundle.min.js"></script>
     <style>
         body {
             min-width: 976px;
@@ -218,6 +218,58 @@
         </symbol>
     </svg>
 
+
+
+    <!-- data-bs-toggle="modal" data-bs-target="#myModal" -->
+
+    <!-- 模态框 -->
+    <div class="modal" id="myModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- 模态框头部 -->
+                <div class="modal-header">
+                    <h4 class="modal-title">模态框标题</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- 模态框内容 -->
+                <div class="modal-body" style="line-height: 38px;">
+                    <div class="row" style="margin-bottom: 10px;">
+                        <div class="col-3 text-center" >工号</div>
+                        <div class="col-9"><input type="text" class="form-control" placeholder="请输入工号" ></div>
+                    </div>
+                    <div class="row" style="margin-bottom: 10px;">
+                        <div class="col-3 text-center" >账号</div>
+                        <div class="col-9"><input type="text" class="form-control" placeholder="请输入账号"  ></div>
+                    </div>
+                    <div class="row" style="margin-bottom: 10px;">
+                        <div class="col-3 text-center" >密码</div>
+                        <div class="col-9"><input type="text" class="form-control" placeholder="请输入密码" ></div>
+                    </div>
+                    <div class="row" style="margin-bottom: 10px;">
+                        <div class="col-3 text-center" >名字</div>
+                        <div class="col-9"><input type="text" class="form-control" placeholder="请输入名字" ></div>
+                    </div>
+                    <div class="row" style="margin-bottom: 10px;">
+                        <div class="col-3 text-center" >性别</div>
+                        <div class="col-9"><input type="text" class="form-control" placeholder="请输入性别" ></div>
+                    </div>
+                    <div class="row" style="margin-bottom: 10px;">
+                        <div class="col-3 text-center" >状态</div>
+                        <div class="col-9"><input type="text" class="form-control" placeholder="请输入状态" ></div>
+                    </div>
+                </div>
+
+                <!-- 模态框底部 -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger">确定</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">关闭</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
     <main>
         <!-- 左侧导航栏 -->
         <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px;">
@@ -230,7 +282,7 @@
             <hr>
             <ul class="nav nav-pills flex-column mb-auto">
                 <li class="nav-item">
-                    <a href="#" class="nav-link active text-white" data-message="YGxx" >
+                    <a href="#" class="nav-link active text-white" data-message="YGxx">
                         <svg class="bi me-2" width="16" height="16">
                             <use xlink:href="#home" />
                         </svg>
@@ -238,19 +290,11 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="nav-link text-white"data-message="YGgz" >
+                    <a href="#" class="nav-link text-white" data-message="YGgz">
                         <svg class="bi me-2" width="16" height="16">
                             <use xlink:href="#speedometer2" />
                         </svg>
                         员工工资
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="nav-link text-white" data-message="YGzw">
-                        <svg class="bi me-2" width="16" height="16">
-                            <use xlink:href="#table" />
-                        </svg>
-                        员工职位
                     </a>
                 </li>
                 <li>
@@ -334,10 +378,13 @@
             <!-- 按钮 -->
             <div class="row" style="margin-top: 10px; margin-right: 0;">
                 <div class="col-1"></div>
-                <div class="col-2"><button type="button" class="btn btn-primary  btn-sm">添加</button></div>
-                <div class="col-7"></div>
+                <div class="col-2"><button type="button" class="btn btn-primary  btn-sm" data-bs-toggle="modal"
+                        data-bs-target="#myModal">添加</button></div>
+                <div class="col-7">
+
+                </div>
                 <div class="col-2">
-                    <span>当前第</span><select class="form-select-sm" >
+                    <span>当前第</span><select class="form-select-sm">
                     </select><span>页</span>
                 </div>
                 <div class="col-1"></div>
@@ -363,7 +410,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                      
+
                         </tbody>
                     </table>
                 </div>
@@ -377,14 +424,14 @@
                 <div class="col-3">
                     <!-- disabled 禁用 -->
                     <ul class="pagination " style="margin: 10px auto">
-                        <li class="page-item " ><a class="page-link" href="#" data-index="home">首页</a></li>
-                        <li class="page-item"><a class="page-link" href="#"  data-index="previousPage">上一页</a></li>
-                        <li class="page-item"><a class="page-link" href="#" data-index="nextPage" >下一页</a></li>
+                        <li class="page-item "><a class="page-link" href="#" data-index="home">首页</a></li>
+                        <li class="page-item"><a class="page-link" href="#" data-index="previousPage">上一页</a></li>
+                        <li class="page-item"><a class="page-link" href="#" data-index="nextPage">下一页</a></li>
                         <li class="page-item"><a class="page-link" href="#" data-index="trailerPage">尾页</a></li>
                     </ul>
                 </div>
                 <div class="col-7">
-                   
+
                 </div>
             </div>
 

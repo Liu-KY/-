@@ -1,10 +1,6 @@
 // 头像标签
 let my = document.querySelector("#dropdownUser2");
 
-// let header = document.querySelector(
-//   "body > main > div.b-example-divider > header"
-// );
-
 //设置退出登录的ul
 let myUl = document.querySelector(
   "body > main > div.b-example-divider > header > div > div.d-flex.align-items-center > div.flex-shrink-0.dropdown > ul"
@@ -55,8 +51,9 @@ let tbody = document.querySelector(
   "body > main > div.b-example-divider > div:nth-child(3) > div.col-10 > table > tbody"
 );
 //thead下面的tr
-let theadTr = document.querySelector("body > main > div.b-example-divider > div:nth-child(3) > div.col-10 > table > thead > tr")
-console.log(theadTr);
+let theadTr = document.querySelector(
+  "body > main > div.b-example-divider > div:nth-child(3) > div.col-10 > table > thead > tr"
+);
 
 //点击左边的ul
 leftUl.addEventListener("click", (e) => {
@@ -64,35 +61,69 @@ leftUl.addEventListener("click", (e) => {
     samsunglink(leftLis, "active", true);
     e.target.classList.add("active");
     crumbs.innerHTML = e.target.innerHTML;
-    if(e.target.dataset.message == "YGxx"){
-      console.log("员工信息");
-    }
 
-
-    if(e.target.dataset.message == "YGgz"){
-      theadTr.innerHTML=`<th scope="col">姓名</th>
-      <th scope="col">工资</th>
-      <th scope="col">职位</th>
-      <th scope="col">编辑</th>`
-
-      let sql = "select * from role"
-      
+    if (e.target.dataset.message == "YGxx") {
+      theadTr.innerHTML = ` <th scope="col">工号</th>
+      <th scope="col">账号</th>
+      <th scope="col">密码</th>
+      <th scope="col">名字</th>
+      <th scope="col">性别</th>
+      <th scope="col">状态</th>
+      <th scope="col">编辑</th>`;
+      sessionStorage.setItem("1111", "工号,账号,密码,名字,性别,状态");
       Ajax({
-        url: "http://127.0.0.1/php/query.php",
-        data:{sql},
+        url: "http://127.0.0.1/php/queryStaffMessage.php",
         success(res) {
           //设置sessionStorage 储存数据
           setSession(res);
           res = JSON.parse(res);
           let arr = [
-            "R_name",
-            "R_salary",
-            "R_position",
+            "S_jobNumber",
+            "S_username",
+            "S_password",
+            "S_name",
+            "S_gender",
+            "S_stat",
           ];
           let str = `
+    <td>
+        <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#myModal">修改</button>
+        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#myModal">删除</button>
+        </button>
+    </td>`;
+          // 将需要的内容模板储存到Storage
+          sessionStorage.setItem("arr", arr);
+          // 将默认按钮模板储存到Storage
+          sessionStorage.setItem("str", str);
+          dateTrtd(res.splice(0, 10), arr, str);
+          //渲染进度条
+          progressBarWidth();
+          // 渲染右上页码
+          rightpageNumber();
+        },
+      });
+    }
+
+    if (e.target.dataset.message == "YGgz") {
+      theadTr.innerHTML = `<th scope="col">姓名</th>
+      <th scope="col">工资</th>
+      <th scope="col">职位</th>
+      <th scope="col">编辑</th>`;
+
+      let sql = "select * from role";
+
+      Ajax({
+        url: "http://127.0.0.1/php/query.php",
+        data: { sql },
+        success(res) {
+          //设置sessionStorage 储存数据
+          setSession(res);
+          res = JSON.parse(res);
+          let arr = ["R_name", "R_salary", "R_position"];
+          let str = `
           <td>
-              <button type="button" class="btn btn-warning btn-sm">修改</button>
-              <button type="button" class="btn btn-danger btn-sm">删除</button>
+              <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#myModal">修改</button>
+              <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#myModal">删除</button>
               </button>
           </td>`;
           // 将需要的内容模板储存到Storage
@@ -105,28 +136,154 @@ leftUl.addEventListener("click", (e) => {
           // 渲染右上页码
           rightpageNumber();
         },
-      })
+      });
     }
 
-    if(e.target.dataset.message == "YGzw"){
-      console.log("员工职位");
+    if (e.target.dataset.message == "Cd") {
+      theadTr.innerHTML = `<th scope="col">菜名</th>
+      <th scope="col">菜类</th>
+      <th scope="col">菜价</th>
+      <th scope="col">编辑</th>`;
+
+      let sql = "select * from menu;";
+
+      Ajax({
+        url: "http://127.0.0.1/php/query.php",
+        data: { sql },
+        success(res) {
+          //设置sessionStorage 储存数据
+          setSession(res);
+          res = JSON.parse(res);
+          let arr = ["M_dishName", "M_kind", "M_price"];
+          let str = `
+          <td>
+              <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#myModal">修改</button>
+              <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#myModal">删除</button>
+              </button>
+          </td>`;
+          // 将需要的内容模板储存到Storage
+          sessionStorage.setItem("arr", arr);
+          // 将默认按钮模板储存到Storage
+          sessionStorage.setItem("str", str);
+          dateTrtd(res.splice(0, 10), arr, str);
+          //渲染进度条
+          progressBarWidth();
+          // 渲染右上页码
+          rightpageNumber();
+        },
+      });
     }
-    if(e.target.dataset.message == "Cd"){
-      console.log("菜单");
+
+    if (e.target.dataset.message == "CPzl") {
+      theadTr.innerHTML = `<th scope="col">菜类</th>
+      <th scope="col">所有的菜品</th>
+      <th scope="col">编辑</th>`;
+
+      let sql = "select * from kind;";
+
+      Ajax({
+        url: "http://127.0.0.1/php/query.php",
+        data: { sql },
+        success(res) {
+          //设置sessionStorage 储存数据
+          setSession(res);
+          res = JSON.parse(res);
+          let arr = ["K_kind"];
+          let str = `
+          <td>
+              <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#myModal">查看所有的菜品</button>
+          </td>
+          <td>
+              <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#myModal">修改</button>
+              <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#myModal">删除</button>
+              </button>
+          </td>`;
+          // 将需要的内容模板储存到Storage
+          sessionStorage.setItem("arr", arr);
+          // 将默认按钮模板储存到Storage
+          sessionStorage.setItem("str", str);
+          dateTrtd(res.splice(0, 10), arr, str);
+          //渲染进度条
+          progressBarWidth();
+          // 渲染右上页码
+          rightpageNumber();
+        },
+      });
     }
-    if(e.target.dataset.message == "CPzl"){
-      console.log("菜品种类");
+
+    if (e.target.dataset.message == "Fd") {
+      theadTr.innerHTML = `<th scope="col">店名</th>
+      <th scope="col">地址</th>
+      <th scope="col">成立时间</th>
+      <th scope="col">店长</th>
+      <th scope="col">编辑</th>`;
+
+      let sql = `select * from outlet inner join role where D_serial = R_serial  and R_position ="店长"`;
+
+      Ajax({
+        url: "http://127.0.0.1/php/query.php",
+        data: { sql },
+        success(res) {
+          //设置sessionStorage 储存数据
+          setSession(res);
+          res = JSON.parse(res);
+          let arr = ["D_name", "D_address", "D_date","R_name"];
+          let str = `
+          <td>
+              <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#myModal">修改</button>
+              <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#myModal">删除</button>
+              </button>
+          </td>`;
+          // 将需要的内容模板储存到Storage
+          sessionStorage.setItem("arr", arr);
+          // 将默认按钮模板储存到Storage
+          sessionStorage.setItem("str", str);
+          dateTrtd(res.splice(0, 10), arr, str);
+          //渲染进度条
+          progressBarWidth();
+          // 渲染右上页码
+          rightpageNumber();
+        },
+      });
     }
-    if(e.target.dataset.message == "Fd"){
-      console.log("分店");
-    }
-    if(e.target.dataset.message == "DYye"){
-      console.log("店营业额");
+
+    if (e.target.dataset.message == "DYye") {
+      theadTr.innerHTML = `<th scope="col">店名</th>
+      <th scope="col">店长</th>
+      <th scope="col">日期</th>
+      <th scope="col">营业额(W)</th>
+      <th scope="col">编辑</th>`;
+
+      let sql = `select * from outlet inner join business where D_serial = B_shop `;
+
+      Ajax({
+        url: "http://127.0.0.1/php/query.php",
+        data: { sql },
+        success(res) {
+          //设置sessionStorage 储存数据
+          setSession(res);
+          res = JSON.parse(res);
+          let arr = ["D_name", "D_address", "B_date","B_totalPrices"];
+          let str = `
+          <td>
+              <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#myModal">修改</button>
+              <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#myModal"  >删除</button>
+              </button>
+          </td>`;
+          // 将需要的内容模板储存到Storage
+          sessionStorage.setItem("arr", arr);
+          // 将默认按钮模板储存到Storage
+          sessionStorage.setItem("str", str);
+          dateTrtd(res.splice(0, 10), arr, str);
+          //渲染进度条
+          progressBarWidth();
+          // 渲染右上页码
+          rightpageNumber();
+        },
+      });
     }
   }
 });
-
-
 
 // 打开页面加载默认的员工信息数据
 Ajax({
@@ -145,8 +302,8 @@ Ajax({
     ];
     let str = `
     <td>
-        <button type="button" class="btn btn-warning btn-sm">修改</button>
-        <button type="button" class="btn btn-danger btn-sm">删除</button>
+        <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#myModal">修改</button>
+        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#myModal">删除</button>
         </button>
     </td>`;
     // 将需要的内容模板储存到Storage
@@ -160,9 +317,6 @@ Ajax({
     rightpageNumber();
   },
 });
-
-
-
 
 // 获取分页的ul
 let padingUl = document.querySelector(
@@ -242,14 +396,15 @@ function dateTrtd(data) {
   // 获取需要的默认按钮模板
   let str = sessionStorage.getItem("str");
   // 遍历传进来的数据
-  arr = arr.split(',')
-    for (let k in data) {
+  arr = arr.split(",");
+  for (let k in data) {
     let tr = document.createElement("tr");
-    arr.forEach(item=>{
+    tr.dataset.id=data[k]["Id"]
+    arr.forEach((item) => {
       let td = document.createElement("td");
       td.innerHTML = data[k][item];
       tr.appendChild(td);
-    })
+    });
     tr.innerHTML += str;
     tbody.appendChild(tr);
   }
@@ -294,6 +449,7 @@ function progressBarWidth() {
 let rpageNumber = document.querySelector(
   "body > main > div.b-example-divider > div:nth-child(2) > div:nth-child(4) > select"
 );
+
 //点击左上角页码切换
 rpageNumber.onchange = function () {
   var index = rpageNumber.selectedIndex + 1;
@@ -303,5 +459,39 @@ rpageNumber.onchange = function () {
   progressBarWidth();
 };
 
+//添加按钮
+let tjan = document.querySelector("body > main > div.b-example-divider > div:nth-child(2) > div:nth-child(2) > button")
 
+//添加按钮确认事件
+tjan.addEventListener("click",function fn(){
+    console.log(111);
+    let ntkbt =document.querySelector("#myModal > div > div > div.modal-header > h4")
+    console.log(ntkbt);
+    ntkbt.innerHTML="添加"+crumbs.innerText.trim();
+  let ntknr = document.querySelector("#myModal > div > div > div.modal-body")
+  
+})
+
+
+//模态框确认按钮
+let ntkqd =document.querySelector("#myModal > div > div > div.modal-footer > button:nth-child(1)")
+
+ntkqd.addEventListener("click",()=>{
+
+
+
+
+ let ntkinp = document.querySelectorAll("#myModal > div > div > div.modal-body input")
+ let arr = []
+ ntkinp.forEach((item)=>{
+    arr.push(item.value)
+ })
+ let sql = `insert into staff value(${arr[0]},${arr[1]},${arr[2]},${arr[3]},'${arr[4]}','${arr[5]}','${arr[6]}'); insert into role value(null,'${arr[0]}',null,null,null)`
+  console.log(sql);
+})
+
+//渲染模态框
+// function xlmtk(){
+  
+// }
 
