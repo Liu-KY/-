@@ -5,8 +5,13 @@ let my = document.querySelector("#dropdownUser2");
 let myUl = document.querySelector(
   "body > main > div.b-example-divider > header > div > div.d-flex.align-items-center > div.flex-shrink-0.dropdown > ul"
 );
+//获取添加按钮
+let tjan = document.querySelector(
+  "body > main > div.b-example-divider > div:nth-child(2) > div:nth-child(2) > button"
+);
 // 欢迎标签
 let mySpan = document.querySelector("#dropdownUser2 > span");
+
 //个人信息的json数据
 let message = JSON.parse(sessionStorage.getItem("message"));
 // 设置登录后的欢迎语
@@ -16,7 +21,7 @@ mySpan.innerHTML = "欢迎您" + message.A_name + "!";
 my.addEventListener("click", () => {
   myUl.classList.toggle("activate");
 });
-
+//点击退出登录
 myUl.addEventListener("click", (e) => {
   myUl.classList.remove("activate");
   if (e.target.className.indexOf("myProfile") != -1) {
@@ -63,6 +68,7 @@ leftUl.addEventListener("click", (e) => {
     crumbs.innerHTML = e.target.innerHTML;
 
     if (e.target.dataset.message == "YGxx") {
+      tjan.dataset.o = "YGxx"
       theadTr.innerHTML = ` <th scope="col">工号</th>
       <th scope="col">账号</th>
       <th scope="col">密码</th>
@@ -70,7 +76,7 @@ leftUl.addEventListener("click", (e) => {
       <th scope="col">性别</th>
       <th scope="col">状态</th>
       <th scope="col">编辑</th>`;
-      sessionStorage.setItem("1111", "工号,账号,密码,名字,性别,状态");
+      sessionStorage.setItem("ygxxadd", "工号,账号,密码,名字,性别,状态");
       Ajax({
         url: "http://127.0.0.1/php/queryStaffMessage.php",
         success(res) {
@@ -105,10 +111,13 @@ leftUl.addEventListener("click", (e) => {
     }
 
     if (e.target.dataset.message == "YGgz") {
+      tjan.dataset.o = "YGgz"
       theadTr.innerHTML = `<th scope="col">姓名</th>
       <th scope="col">工资</th>
       <th scope="col">职位</th>
       <th scope="col">编辑</th>`;
+
+      sessionStorage.setItem("YGgzadd", "员工,工资,职位");
 
       let sql = "select * from role";
 
@@ -140,10 +149,13 @@ leftUl.addEventListener("click", (e) => {
     }
 
     if (e.target.dataset.message == "Cd") {
+      tjan.dataset.o = "Cd"
       theadTr.innerHTML = `<th scope="col">菜名</th>
       <th scope="col">菜类</th>
       <th scope="col">菜价</th>
       <th scope="col">编辑</th>`;
+
+      sessionStorage.setItem("Cdadd", "菜名,菜类,菜价");
 
       let sql = "select * from menu;";
 
@@ -175,9 +187,12 @@ leftUl.addEventListener("click", (e) => {
     }
 
     if (e.target.dataset.message == "CPzl") {
+      tjan.dataset.o = "CPzl"
       theadTr.innerHTML = `<th scope="col">菜类</th>
       <th scope="col">所有的菜品</th>
       <th scope="col">编辑</th>`;
+
+      sessionStorage.setItem("CPzladd", "菜类");
 
       let sql = "select * from kind;";
 
@@ -212,11 +227,14 @@ leftUl.addEventListener("click", (e) => {
     }
 
     if (e.target.dataset.message == "Fd") {
+      tjan.dataset.o = "Fd"
       theadTr.innerHTML = `<th scope="col">店名</th>
       <th scope="col">地址</th>
       <th scope="col">成立时间</th>
       <th scope="col">店长</th>
       <th scope="col">编辑</th>`;
+
+      sessionStorage.setItem("Fdadd", "店名,地址,成立时间,店长");
 
       let sql = `select * from outlet inner join role where D_serial = R_serial  and R_position ="店长"`;
 
@@ -227,7 +245,7 @@ leftUl.addEventListener("click", (e) => {
           //设置sessionStorage 储存数据
           setSession(res);
           res = JSON.parse(res);
-          let arr = ["D_name", "D_address", "D_date","R_name"];
+          let arr = ["D_name", "D_address", "D_date", "R_name"];
           let str = `
           <td>
               <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#myModal">修改</button>
@@ -248,11 +266,14 @@ leftUl.addEventListener("click", (e) => {
     }
 
     if (e.target.dataset.message == "DYye") {
+       tjan.dataset.o = "DYye"
       theadTr.innerHTML = `<th scope="col">店名</th>
       <th scope="col">店长</th>
       <th scope="col">日期</th>
       <th scope="col">营业额(W)</th>
       <th scope="col">编辑</th>`;
+
+      sessionStorage.setItem("DYyeadd", "店名,店长,日期,营业额");
 
       let sql = `select * from outlet inner join business where D_serial = B_shop `;
 
@@ -263,7 +284,7 @@ leftUl.addEventListener("click", (e) => {
           //设置sessionStorage 储存数据
           setSession(res);
           res = JSON.parse(res);
-          let arr = ["D_name", "D_address", "B_date","B_totalPrices"];
+          let arr = ["D_name", "D_address", "B_date", "B_totalPrices"];
           let str = `
           <td>
               <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#myModal">修改</button>
@@ -284,6 +305,10 @@ leftUl.addEventListener("click", (e) => {
     }
   }
 });
+//设置默认ck
+sessionStorage.setItem("ygxxadd", "工号,账号,密码,名字,性别,状态");
+sessionStorage.setItem("ygxxalter", "工号,账号,密码,名字,性别,状态");
+sessionStorage.setItem("ygxxdelete", "工号,账号,密码,名字,性别,状态");
 
 // 打开页面加载默认的员工信息数据
 Ajax({
@@ -336,7 +361,6 @@ padingUl.addEventListener("click", (e) => {
   }
   //上一页
   if (e.target.dataset.index == "previousPage") {
-    console.log(222);
     let index = sessionStorage.getItem("atPagination");
     if (index <= 1) return alert("前面没有了");
     sessionStorage.setItem("atPagination", --index);
@@ -399,7 +423,7 @@ function dateTrtd(data) {
   arr = arr.split(",");
   for (let k in data) {
     let tr = document.createElement("tr");
-    tr.dataset.id=data[k]["Id"]
+    tr.dataset.id = data[k]["Id"];
     arr.forEach((item) => {
       let td = document.createElement("td");
       td.innerHTML = data[k][item];
@@ -459,39 +483,64 @@ rpageNumber.onchange = function () {
   progressBarWidth();
 };
 
-//添加按钮
-let tjan = document.querySelector("body > main > div.b-example-divider > div:nth-child(2) > div:nth-child(2) > button")
+//模态框标题
+let ntkbt = document.querySelector(
+  "#myModal > div > div > div.modal-header > h4"
+);
+//模态框内容
+let ntknr = document.querySelector("#myModal > div > div > div.modal-body");
 
-//添加按钮确认事件
-tjan.addEventListener("click",function fn(){
-    console.log(111);
-    let ntkbt =document.querySelector("#myModal > div > div > div.modal-header > h4")
-    console.log(ntkbt);
-    ntkbt.innerHTML="添加"+crumbs.innerText.trim();
-  let ntknr = document.querySelector("#myModal > div > div > div.modal-body")
-  
-})
-
+// 添加按钮事件
+tjan.addEventListener("click", function fn() {
+  //设置模态框标题
+  ntkbt.innerHTML="添加"+crumbs.innerText.trim();
+  if(this.dataset.o =="YGxx"){
+    ntknr.innerHTML = xlmtk('ygxxadd')
+  }
+  if(this.dataset.o =="YGgz"){
+    ntknr.innerHTML = xlmtk('YGgzadd')
+  }
+  if(this.dataset.o =="Cd"){
+    ntknr.innerHTML = xlmtk('Cdadd')
+  }
+  if(this.dataset.o =="CPzl"){
+    ntknr.innerHTML = xlmtk('CPzladd')
+  }
+  if(this.dataset.o =="Fd"){
+    ntknr.innerHTML = xlmtk('Fdadd')
+  }
+  if(this.dataset.o =="DYye"){
+    ntknr.innerHTML = xlmtk('DYyeadd')
+  }
+});
 
 //模态框确认按钮
-let ntkqd =document.querySelector("#myModal > div > div > div.modal-footer > button:nth-child(1)")
 
-ntkqd.addEventListener("click",()=>{
+let ntkqd = document.querySelector(
+  "#myModal > div > div > div.modal-footer > button:nth-child(1)"
+);
 
-
-
-
- let ntkinp = document.querySelectorAll("#myModal > div > div > div.modal-body input")
- let arr = []
- ntkinp.forEach((item)=>{
-    arr.push(item.value)
- })
- let sql = `insert into staff value(${arr[0]},${arr[1]},${arr[2]},${arr[3]},'${arr[4]}','${arr[5]}','${arr[6]}'); insert into role value(null,'${arr[0]}',null,null,null)`
+ntkqd.addEventListener("click", () => {
+  let ntkinp = document.querySelectorAll(
+    "#myModal > div > div > div.modal-body input"
+  );
+  let arr = [];
+  ntkinp.forEach((item) => {
+    arr.push(item.value);
+  });
+  let sql = `insert into staff value(${arr[0]},${arr[1]},${arr[2]},${arr[3]},'${arr[4]}','${arr[5]}','${arr[6]}'); insert into role value(null,'${arr[0]}',null,null,null)`;
   console.log(sql);
-})
+});
 
 //渲染模态框
-// function xlmtk(){
-  
-// }
-
+function xlmtk(data){
+  let arr =sessionStorage.getItem(data).split(",")
+  let str =``
+  arr.forEach(item=>{
+    str+=` <div class="row" style="margin-bottom: 10px;">
+    <div class="col-3 text-center" >${item}</div>
+    <div class="col-9"><input type="text" class="form-control" placeholder="请输入${item}" ></div>
+    </div>`
+  })
+  return str
+}
