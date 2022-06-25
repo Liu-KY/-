@@ -50,7 +50,7 @@ let leftLis = document.querySelectorAll(
 let crumbs = document.querySelector(
   "body > main > div.b-example-divider > header > div > div.dropdown > ul > li > a"
 );
-
+crumbs.dataset.o = "YGxx";
 //tbody
 let tbody = document.querySelector(
   "body > main > div.b-example-divider > div:nth-child(3) > div.col-10 > table > tbody"
@@ -68,7 +68,7 @@ leftUl.addEventListener("click", (e) => {
     crumbs.innerHTML = e.target.innerHTML;
 
     if (e.target.dataset.message == "YGxx") {
-      tjan.dataset.o = "YGxx"
+      crumbs.dataset.o = "YGxx";
       theadTr.innerHTML = ` <th scope="col">工号</th>
       <th scope="col">账号</th>
       <th scope="col">密码</th>
@@ -76,7 +76,8 @@ leftUl.addEventListener("click", (e) => {
       <th scope="col">性别</th>
       <th scope="col">状态</th>
       <th scope="col">编辑</th>`;
-      sessionStorage.setItem("ygxxadd", "工号,账号,密码,名字,性别,状态");
+      sessionStorage.setItem("ygxxadd", "密码,名字,性别");
+      sessionStorage.setItem("ygxxalter", "密码,性别");
       Ajax({
         url: "http://127.0.0.1/php/queryStaffMessage.php",
         success(res) {
@@ -93,8 +94,8 @@ leftUl.addEventListener("click", (e) => {
           ];
           let str = `
     <td>
-        <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#myModal">修改</button>
-        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#myModal">删除</button>
+        <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#myModal" data-o="alter">修改</button>
+        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#myModal" data-o="delete">删除</button>
         </button>
     </td>`;
           // 将需要的内容模板储存到Storage
@@ -111,13 +112,14 @@ leftUl.addEventListener("click", (e) => {
     }
 
     if (e.target.dataset.message == "YGgz") {
-      tjan.dataset.o = "YGgz"
+      crumbs.dataset.o = "YGgz";
       theadTr.innerHTML = `<th scope="col">姓名</th>
       <th scope="col">工资</th>
       <th scope="col">职位</th>
       <th scope="col">编辑</th>`;
 
-      sessionStorage.setItem("YGgzadd", "员工,工资,职位");
+      sessionStorage.setItem("YGgzadd", "工资,职位,分店编号");
+      sessionStorage.setItem("YGgzalter", "员工,工资,职位");
 
       let sql = "select * from role";
 
@@ -131,8 +133,8 @@ leftUl.addEventListener("click", (e) => {
           let arr = ["R_name", "R_salary", "R_position"];
           let str = `
           <td>
-              <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#myModal">修改</button>
-              <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#myModal">删除</button>
+              <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#myModal" data-o="alter">修改</button>
+              <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#myModal" data-o="delete">删除</button>
               </button>
           </td>`;
           // 将需要的内容模板储存到Storage
@@ -149,13 +151,14 @@ leftUl.addEventListener("click", (e) => {
     }
 
     if (e.target.dataset.message == "Cd") {
-      tjan.dataset.o = "Cd"
+      crumbs.dataset.o = "Cd";
       theadTr.innerHTML = `<th scope="col">菜名</th>
       <th scope="col">菜类</th>
       <th scope="col">菜价</th>
       <th scope="col">编辑</th>`;
 
       sessionStorage.setItem("Cdadd", "菜名,菜类,菜价");
+      sessionStorage.setItem("Cdalter", "菜名,菜类,菜价");
 
       let sql = "select * from menu;";
 
@@ -169,8 +172,8 @@ leftUl.addEventListener("click", (e) => {
           let arr = ["M_dishName", "M_kind", "M_price"];
           let str = `
           <td>
-              <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#myModal">修改</button>
-              <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#myModal">删除</button>
+              <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#myModal" data-o="alter">修改</button>
+              <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#myModal" data-o="delete">删除</button>
               </button>
           </td>`;
           // 将需要的内容模板储存到Storage
@@ -187,12 +190,13 @@ leftUl.addEventListener("click", (e) => {
     }
 
     if (e.target.dataset.message == "CPzl") {
-      tjan.dataset.o = "CPzl"
+      crumbs.dataset.o = "CPzl";
       theadTr.innerHTML = `<th scope="col">菜类</th>
       <th scope="col">所有的菜品</th>
       <th scope="col">编辑</th>`;
 
       sessionStorage.setItem("CPzladd", "菜类");
+      sessionStorage.setItem("CPzlalter", "菜类");
 
       let sql = "select * from kind;";
 
@@ -206,11 +210,11 @@ leftUl.addEventListener("click", (e) => {
           let arr = ["K_kind"];
           let str = `
           <td>
-              <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#myModal">查看所有的菜品</button>
+              <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#myModal" data-o="lookcp">查看所有的菜品</button>
           </td>
           <td>
-              <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#myModal">修改</button>
-              <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#myModal">删除</button>
+              <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#myModal" data-o="alter">修改</button>
+              <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#myModal" data-o="delete">删除</button>
               </button>
           </td>`;
           // 将需要的内容模板储存到Storage
@@ -227,7 +231,7 @@ leftUl.addEventListener("click", (e) => {
     }
 
     if (e.target.dataset.message == "Fd") {
-      tjan.dataset.o = "Fd"
+      crumbs.dataset.o = "Fd";
       theadTr.innerHTML = `<th scope="col">店名</th>
       <th scope="col">地址</th>
       <th scope="col">成立时间</th>
@@ -235,6 +239,7 @@ leftUl.addEventListener("click", (e) => {
       <th scope="col">编辑</th>`;
 
       sessionStorage.setItem("Fdadd", "店名,地址,成立时间,店长");
+      sessionStorage.setItem("Fdalter", "店名,地址,成立时间,店长");
 
       let sql = `select * from outlet inner join role where D_serial = R_serial  and R_position ="店长"`;
 
@@ -248,8 +253,8 @@ leftUl.addEventListener("click", (e) => {
           let arr = ["D_name", "D_address", "D_date", "R_name"];
           let str = `
           <td>
-              <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#myModal">修改</button>
-              <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#myModal">删除</button>
+              <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#myModal" data-o="alter">修改</button>
+              <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#myModal" data-o="delete">删除</button>
               </button>
           </td>`;
           // 将需要的内容模板储存到Storage
@@ -266,7 +271,7 @@ leftUl.addEventListener("click", (e) => {
     }
 
     if (e.target.dataset.message == "DYye") {
-       tjan.dataset.o = "DYye"
+      crumbs.dataset.o = "DYye";
       theadTr.innerHTML = `<th scope="col">店名</th>
       <th scope="col">店长</th>
       <th scope="col">日期</th>
@@ -274,6 +279,7 @@ leftUl.addEventListener("click", (e) => {
       <th scope="col">编辑</th>`;
 
       sessionStorage.setItem("DYyeadd", "店名,店长,日期,营业额");
+      sessionStorage.setItem("DYyealter", "店名,店长,日期,营业额");
 
       let sql = `select * from outlet inner join business where D_serial = B_shop `;
 
@@ -287,8 +293,8 @@ leftUl.addEventListener("click", (e) => {
           let arr = ["D_name", "D_address", "B_date", "B_totalPrices"];
           let str = `
           <td>
-              <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#myModal">修改</button>
-              <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#myModal"  >删除</button>
+              <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#myModal" data-o="alter">修改</button>
+              <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#myModal" data-o="delete" >删除</button>
               </button>
           </td>`;
           // 将需要的内容模板储存到Storage
@@ -306,8 +312,8 @@ leftUl.addEventListener("click", (e) => {
   }
 });
 //设置默认ck
-sessionStorage.setItem("ygxxadd", "工号,账号,密码,名字,性别,状态");
-sessionStorage.setItem("ygxxalter", "工号,账号,密码,名字,性别,状态");
+sessionStorage.setItem("ygxxadd", "密码,名字,性别");
+sessionStorage.setItem("ygxxalter", "密码,性别");
 sessionStorage.setItem("ygxxdelete", "工号,账号,密码,名字,性别,状态");
 
 // 打开页面加载默认的员工信息数据
@@ -327,8 +333,8 @@ Ajax({
     ];
     let str = `
     <td>
-        <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#myModal">修改</button>
-        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#myModal">删除</button>
+        <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#myModal" data-o="alter">修改</button>
+        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#myModal" data-o="delete">删除</button>
         </button>
     </td>`;
     // 将需要的内容模板储存到Storage
@@ -493,24 +499,76 @@ let ntknr = document.querySelector("#myModal > div > div > div.modal-body");
 // 添加按钮事件
 tjan.addEventListener("click", function fn() {
   //设置模态框标题
-  ntkbt.innerHTML="添加"+crumbs.innerText.trim();
-  if(this.dataset.o =="YGxx"){
-    ntknr.innerHTML = xlmtk('ygxxadd')
+  ntkbt.innerHTML = "添加" + crumbs.innerText.trim();
+  ntknr.innerHTML = "";
+  let sql ;
+  if (crumbs.dataset.o == "YGxx") {
+
+
+    let arr = JSON.parse(sessionStorage.getItem("data"));
+
+    arr = arr[arr.length - 1];
+
+    ntknr.innerHTML += ` <div class="row" style="margin-bottom: 10px;">
+    <div class="col-3 text-center" >工号</div>
+    <div class="col-9"><input type="text" class="form-control" disabled value="${++arr.S_jobNumber}" ></div>
+    </div>`;
+
+    ntknr.innerHTML += ` <div class="row" style="margin-bottom: 10px;">
+    <div class="col-3 text-center" >账号</div>
+    <div class="col-9"><input type="text" class="form-control" disabled value="${++arr.S_username}"></div>
+    </div>`;
+
+    ntknr.innerHTML += xlmtk("ygxxadd");
+
+    ntknr.innerHTML += ` <div class="row" style="margin-bottom: 10px;">
+    <div class="col-3 text-center" >状态</div>
+    <div class="col-9"><input type="text" class="form-control" disabled value="在职" ></div>
+    </div>`;
   }
-  if(this.dataset.o =="YGgz"){
-    ntknr.innerHTML = xlmtk('YGgzadd')
+  if (crumbs.dataset.o == "YGgz") {
+      sql = "select * from role where  R_salary is null";
+      async function fn (){
+        let jg =  await PromiseAjax({
+          url:"http://127.0.0.1/php/query.php",
+          data:{sql},
+        })
+        let jg1 =  await JSON.parse(jg)
+        let s = await function s(jg1){
+          let select = document.createElement("select")
+
+          jg1.forEach(item=>{
+            select.innerHTML+=`<option data-id=${item.Id}>${item.R_name}</option>`
+          })
+
+          str = ` <div class="row" style="margin-bottom: 10px;">
+          <div class="col-3 text-center" >名字</div>
+          <div class="col-9"></div>
+          </div>`
+
+          str =  new DOMParser().parseFromString(str, 'text/html');
+          str = str.querySelector(".row")
+          let col9= str.querySelector(".col-9")
+          col9.appendChild(select)
+          ntknr.appendChild(str)
+        }(jg1)
+
+        ntknr.innerHTML += xlmtk("YGgzadd");
+      }
+     fn()
+     
   }
-  if(this.dataset.o =="Cd"){
-    ntknr.innerHTML = xlmtk('Cdadd')
+  if (crumbs.dataset.o == "Cd") {
+    ntknr.innerHTML = xlmtk("Cdadd");
   }
-  if(this.dataset.o =="CPzl"){
-    ntknr.innerHTML = xlmtk('CPzladd')
+  if (crumbs.dataset.o == "CPzl") {
+    ntknr.innerHTML = xlmtk("CPzladd");
   }
-  if(this.dataset.o =="Fd"){
-    ntknr.innerHTML = xlmtk('Fdadd')
+  if (crumbs.dataset.o == "Fd") {
+    ntknr.innerHTML = xlmtk("Fdadd");
   }
-  if(this.dataset.o =="DYye"){
-    ntknr.innerHTML = xlmtk('DYyeadd')
+  if (crumbs.dataset.o == "DYye") {
+    ntknr.innerHTML = xlmtk("DYyeadd");
   }
 });
 
@@ -519,7 +577,7 @@ tjan.addEventListener("click", function fn() {
 let ntkqd = document.querySelector(
   "#myModal > div > div > div.modal-footer > button:nth-child(1)"
 );
-
+//模态框确认按钮
 ntkqd.addEventListener("click", () => {
   let ntkinp = document.querySelectorAll(
     "#myModal > div > div > div.modal-body input"
@@ -528,19 +586,273 @@ ntkqd.addEventListener("click", () => {
   ntkinp.forEach((item) => {
     arr.push(item.value);
   });
-  let sql = `insert into staff value(${arr[0]},${arr[1]},${arr[2]},${arr[3]},'${arr[4]}','${arr[5]}','${arr[6]}'); insert into role value(null,'${arr[0]}',null,null,null)`;
-  console.log(sql);
+  let sql =``
+  let sql2 =``
+  //添加
+  if( ntkbt.innerHTML.charAt(0) == "添"){
+    switch (crumbs.dataset.o) {
+      case "YGxx":
+        sql = `insert into staff value(null,${arr[0]},${arr[1]},${arr[2]},'${arr[3]}','${arr[4]}','${arr[5]}')`;
+  
+         sql2 = `insert into role value(null,'${arr[3]}',null,null,null)`;
+  
+        async function fn() {
+          let result = await addDate(sql);
+          if (result == "添加失败") {
+            alert("添加失败，密码只能是纯数字")
+            return
+          }
+          let result1 = await addDate(sql2);
+          alert("添加成功")
+        }
+        fn();
+        Ajax({
+          url: "http://127.0.0.1/php/queryStaffMessage.php",
+          success(res) {
+            //设置sessionStorage 储存数据
+            setSession(res);
+            res = JSON.parse(res);
+            let arr = [
+              "S_jobNumber",
+              "S_username",
+              "S_password",
+              "S_name",
+              "S_gender",
+              "S_stat",
+            ];
+            let str = `
+      <td>
+          <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#myModal" data-o="alter">修改</button>
+          <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#myModal" data-o="delete">删除</button>
+          </button>
+      </td>`;
+            // 将需要的内容模板储存到Storage
+            sessionStorage.setItem("arr", arr);
+            // 将默认按钮模板储存到Storage
+            sessionStorage.setItem("str", str);
+            dateTrtd(res.splice(0, 10), arr, str);
+            //渲染进度条
+            progressBarWidth();
+            // 渲染右上页码
+            rightpageNumber();
+          },
+        });
+        break;
+      case "YGgz":
+        console.log(arr);
+        break;
+      case "Cd":
+        ntknr.innerHTML = xlmtk("Cdalter");
+        break;
+      case "CPzl":
+        ntknr.innerHTML = xlmtk("CPzlalter");
+        break;
+      case "Fd":
+        ntknr.innerHTML = xlmtk("Fdalter");
+        break;
+      case "DYye":
+        ntknr.innerHTML = xlmtk("DYyealter");
+        break;
+      default:
+        break;
+    }
+  }
+  //修改
+  if( ntkbt.innerHTML.charAt(0) == "修"){
+    switch (crumbs.dataset.o) {
+      case "YGxx":
+        console.log(arr);
+        sql = `update staff set S_password=${arr[2]},S_gender='${arr[4]}',S_stat='${arr[5]}' where id = ${sessionStorage.getItem('dqid')}`;
+        Ajax({
+          url: "http://127.0.0.1/php/alter.php",
+          data:{sql},
+          success(res) {
+            if(res =="修改成功"){
+              alert("修改成功")
+              location.reload()
+            }else{
+              alert("修改失败")
+            }
+          },
+        });
+        break;
+      case "YGgz":
+        ntknr.innerHTML = xlmtk("YGgzalter");
+        break;
+      case "Cd":
+        ntknr.innerHTML = xlmtk("Cdalter");
+        break;
+      case "CPzl":
+        ntknr.innerHTML = xlmtk("CPzlalter");
+        break;
+      case "Fd":
+        ntknr.innerHTML = xlmtk("Fdalter");
+        break;
+      case "DYye":
+        ntknr.innerHTML = xlmtk("DYyealter");
+        break;
+      default:
+        break;
+    }
+  }
+// 删除
+  if( ntkbt.innerHTML.charAt(0) == "删"){
+    switch (crumbs.dataset.o) {
+      case "YGxx":
+        sql = `delete from staff where id = ${sessionStorage.getItem('dqid')}`;
+        Ajax({
+          url: "http://127.0.0.1/php/delet.php",
+          data:{sql},
+          success(res) {
+            if(res =="删除成功"){
+              alert("删除成功")
+              location.reload()
+            }else{
+              alert("删除失败")
+            }
+          },
+        });
+        break;
+      case "YGgz":
+         sql = "select * from role where  R_salary is null"
+        Ajax({
+          url: "http://127.0.0.1/php/query.php",
+          data: { sql },
+          success(res) {
+            res = JSON.parse(res);
+            let str = `
+            <td>
+                <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#myModal" data-o="alter">修改</button>
+                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#myModal" data-o="delete">删除</button>
+                </button>
+            </td>`;
+            // 将需要的内容模板储存到Storage
+            sessionStorage.setItem("arr", arr);
+            // 将默认按钮模板储存到Storage
+            sessionStorage.setItem("str", str);
+            dateTrtd(res.splice(0, 10), arr, str);
+            //渲染进度条
+            progressBarWidth();
+            // 渲染右上页码
+            rightpageNumber();
+          },
+        });
+        ntknr.innerHTML = xlmtk("YGgzalter");
+        break;
+      case "Cd":
+        ntknr.innerHTML = xlmtk("Cdalter");
+        break;
+      case "CPzl":
+        ntknr.innerHTML = xlmtk("CPzlalter");
+        break;
+      case "Fd":
+        ntknr.innerHTML = xlmtk("Fdalter");
+        break;
+      case "DYye":
+        ntknr.innerHTML = xlmtk("DYyealter");
+        break;
+      default:
+        break;
+    }
+  }
+
 });
 
 //渲染模态框
-function xlmtk(data){
-  let arr =sessionStorage.getItem(data).split(",")
-  let str =``
-  arr.forEach(item=>{
-    str+=` <div class="row" style="margin-bottom: 10px;">
+function xlmtk(data) {
+  let arr = sessionStorage.getItem(data).split(",");
+  let str = ``;
+  arr.forEach((item) => {
+    str += ` <div class="row" style="margin-bottom: 10px;">
     <div class="col-3 text-center" >${item}</div>
-    <div class="col-9"><input type="text" class="form-control" placeholder="请输入${item}" ></div>
-    </div>`
-  })
-  return str
+    <div class="col-9"><input type="text" class="form-control" placeholder="请输入${item}" value=""></div>
+    </div>`;
+  });
+  return str;
+}
+//修改删除事件
+tbody.addEventListener("click", (e) => {
+  sessionStorage.setItem('dqid',e.target.parentElement.parentElement.dataset.id)
+  if (e.target.dataset.o == "alter") {
+    ntkbt.innerHTML = "修改" + crumbs.innerText.trim();
+    ntknr.innerHTML =""
+
+    switch (crumbs.dataset.o) {
+      case "YGxx":
+      let sql = `select * from staff where id = ${e.target.parentElement.parentElement.dataset.id}`
+      
+      Ajax({
+        url: "http://127.0.0.1/php/query.php",
+        data: { sql },
+        success(res) {
+          res = JSON.parse(res);
+          ntknr.innerHTML += ` <div class="row" style="margin-bottom: 10px;">
+          <div class="col-3 text-center" >工号</div>
+          <div class="col-9"><input type="text" class="form-control" disabled value="${res[0].S_jobNumber}" ></div>
+          </div>`;
+      
+          ntknr.innerHTML += ` <div class="row" style="margin-bottom: 10px;">
+          <div class="col-3 text-center" >账号</div>
+          <div class="col-9"><input type="text" class="form-control" disabled value="${res[0].S_username}"></div>
+          </div>`;
+
+          ntknr.innerHTML += xlmtk("ygxxalter");
+
+          ntknr.innerHTML += ` <div class="row" style="margin-bottom: 10px;">
+          <div class="col-3 text-center" >状态</div>
+          <div class="col-9"><input type="text" class="form-control"   value="${res[0].S_stat}" ></div>
+          </div>`;
+
+          let ntkrow = document.querySelectorAll(
+            "#myModal > div > div > div.modal-body .row"
+          );
+
+          let input = ` <div class="row" style="margin-bottom: 10px;">
+          <div class="col-3 text-center" >名字</div>
+          <div class="col-9"><input type="text" class="form-control" disabled value="${res[0].S_name}"></div>
+          </div>`;
+
+        input =  new DOMParser().parseFromString(input, 'text/html');
+        input = input.querySelector(".row")
+
+         ntknr.insertBefore(input,ntkrow[3])
+        },
+      });
+      
+        break;
+      case "YGgz":
+        ntknr.innerHTML = xlmtk("YGgzalter");
+        break;
+      case "Cd":
+        ntknr.innerHTML = xlmtk("Cdalter");
+        break;
+      case "CPzl":
+        ntknr.innerHTML = xlmtk("CPzlalter");
+        break;
+      case "Fd":
+        ntknr.innerHTML = xlmtk("Fdalter");
+        break;
+      case "DYye":
+        ntknr.innerHTML = xlmtk("DYyealter");
+        break;
+      default:
+        break;
+    }
+  }
+  if (e.target.dataset.o == "delete") {
+    e.stopPropagation();
+    ntkbt.innerHTML = "删除" + crumbs.innerText.trim();
+    ntknr.innerHTML = ` 
+    <div class="row" style="margin-bottom: 10px;">
+    <div class="col-12 text-center">确定要删除吗</div>
+</div>`;
+  }
+});
+
+function addDate(date) {
+  let sql = date;
+  return PromiseAjax({
+    url: "http://127.0.0.1/php/add.php",
+    data: { sql },
+  });
 }

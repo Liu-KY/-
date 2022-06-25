@@ -5,7 +5,7 @@ $password =$_POST["password"];
 
 $sql = "select * from intendant where A_username = '$username' and A_password='$password' ";
 
-$res = mysql_query($sql); 
+$res = mysql_query($sql);
 
 $row =mysql_fetch_assoc($res);
 

@@ -88,3 +88,19 @@ function Ajax(options){
         }
     }
 }
+
+function PromiseAjax(options){
+    const p1 = new Promise((resolve,reject)=>{
+        Ajax({
+            type:options.type || "GET",  //请求的方式,默认值为get
+            url:options.url || "",     //氢气的URL
+            async:options.async || true, //是否异步
+            data:options.data || "",//请求的参数
+            dataType:options.dataType || "string", //string,json
+            success(res){
+                resolve(res)
+            }
+        })
+    })
+    return p1;
+}
